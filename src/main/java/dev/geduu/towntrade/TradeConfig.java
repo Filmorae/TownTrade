@@ -2,6 +2,7 @@ package dev.geduu.towntrade;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -46,14 +47,23 @@ record TradeConfig(int orderLimit, int protectionMinutes, int publicPremium, Str
             Objects.requireNonNull(input, "Default trade catalog");
             defaults = JSON.fromJson(new String(input.readAllBytes(), StandardCharsets.UTF_8), JsonObject.class);
         }
+        JsonArray shelf;
+        try (var input = TradeConfig.class.getResourceAsStream("/towntrade-shelf.json")) {
+            Objects.requireNonNull(input, "Default shelf expansion");
+            shelf = JSON.fromJson(new String(input.readAllBytes(), StandardCharsets.UTF_8), JsonArray.class);
+        }
         if (!Files.exists(file)) {
+            ShelfCatalog.apply(defaults, shelf);
             TradeConfig config = parse(defaults);
             write(file, defaults);
             return config;
         }
         var document = JSON.fromJson(Files.readString(file), JsonObject.class);
         TradeConfig config = parse(document);
-        if (CatalogRetailUpgrade.apply(document, defaults)) {
+        boolean retailUpgraded = CatalogRetailUpgrade.apply(document, defaults);
+        boolean mineralsUpgraded = CatalogMineralsUpgrade.apply(document, defaults);
+        boolean shelfUpgraded = ShelfCatalog.apply(document, shelf);
+        if (retailUpgraded || mineralsUpgraded || shelfUpgraded) {
             config = parse(document);
             write(file, document);
         }

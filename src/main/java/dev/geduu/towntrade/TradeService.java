@@ -345,11 +345,14 @@ final class TradeService {
     private Deal order(ServerPlayer player, String owner, TradeWire.Request request, long now) {
         var rule = requireProduct(request.target()).rule();
         if (!rule.requestOnly()) throw reject("invalid");
-        verifyQuote(request, rule.buyPrice());
+        int batches = positive(request.count(), TradeRules.maxOrderBatches(rule.buyBatch()));
+        int quantity = batches * rule.buyBatch();
+        long price = TradeRules.orderPrice(rule.buyPrice(), batches);
+        verifyQuote(request, price);
         int active = 0;
         int personal = 0;
         for (var previous : state.orders.values()) {
-            if (!previous.active(now)) continue;
+            if (!previous.active(now) || orderProduct(previous) == null) continue;
             active++;
             if (!previous.owner().equals(owner)) continue;
             personal++;
@@ -358,8 +361,8 @@ final class TradeService {
         if (personal >= config.orderLimit() || active >= SERVER_ORDER_LIMIT) throw reject("order_limit");
         long arrival = now + rule.interval();
         var order = new TradeRules.Order(UUID.randomUUID().toString(), owner, player.getScoreboardName(),
-                rule.id(), rule.buyPrice(), now, arrival, arrival + config.protectionMinutes() * TradeRules.MINUTE,
-                TradeRules.orderExpiry(arrival, timezone), "active");
+                rule.id(), price, now, arrival, arrival + config.protectionMinutes() * TradeRules.MINUTE,
+                TradeRules.orderExpiry(arrival, timezone), "active", quantity);
         return new Deal(new TradeStore.Change(owner, null, null, null, null, null, order), null);
     }
 
@@ -372,15 +375,20 @@ final class TradeService {
             return new Deal(new TradeStore.Change(owner, null, null, null, null, null, order.closed("cancelled")), null);
         }
         if (!order.arrived(now) || (!own && now < order.protectsUntil())) throw reject("order_unavailable");
-        var entry = requireProduct(order.product());
-        if (!entry.rule().requestOnly()) throw reject("order_unavailable");
+        var entry = orderProduct(order);
+        if (entry == null) throw reject("order_unavailable");
         long total = own ? order.price() : TradeRules.publicPrice(order.price(), config.publicPremium());
         verifyQuote(request, total);
         long result = debit(balance, total);
-        var plan = InventoryPlan.add(player.getInventory(), entry.item(), entry.rule().buyBatch());
+        var plan = InventoryPlan.add(player.getInventory(), entry.item(), order.quantityOrBatch(entry.rule().buyBatch()));
         if (plan == null) throw reject("backpack_full");
         return new Deal(new TradeStore.Change(owner, result, null, null, null, null,
                 order.closed(own ? "claimed" : "bought_by_other")), plan);
+    }
+
+    private ListingData orderProduct(TradeRules.Order order) {
+        var entry = products.get(order.product());
+        return entry != null && entry.rule().requestOnly() ? entry : null;
     }
 
     private Deal deleteOrder(String owner, String id) {
@@ -550,10 +558,11 @@ final class TradeService {
         for (var order : state.orders.values()) {
             if (!order.active(now) || !order.arrived(now)) continue;
             var player = online.get(order.owner());
-            var offer = products.get(order.product());
+            var offer = orderProduct(order);
             if (player == null || offer == null) continue;
             if (notified.computeIfAbsent(order.owner(), key -> new HashSet<>()).add(order.id())) {
-                player.sendSystemMessage(Component.translatable("towntrade.notice.arrived", offer.item().getHoverName()));
+                player.sendSystemMessage(Component.translatable("towntrade.notice.arrived",
+                        offer.item().getHoverName(), order.quantityOrBatch(offer.rule().buyBatch())));
             }
         }
         var iterator = sessions.entrySet().iterator();
@@ -680,7 +689,8 @@ final class TradeService {
                         new TradeWire.Listing(product.capacity(), TradeRules.NO_TIME, product.buyPrice()));
             }
             for (var order : state.orders.values()) {
-                if (!products.containsKey(order.product())) continue;
+                var entry = orderProduct(order);
+                if (entry == null) continue;
                 boolean own = owner.equals(order.owner());
                 boolean active = order.active(now);
                 if (!active && !own) continue;
@@ -693,7 +703,8 @@ final class TradeService {
                 }
                 long price = own ? order.price() : TradeRules.publicPrice(order.price(), config.publicPremium());
                 orders.add(new TradeWire.OrderView(order.id(), order.product(), order.ownerName(), own, price,
-                        order.placed(), order.arrives(), order.protectsUntil(), order.expires(), order.displayStatus(now)));
+                        order.placed(), order.arrives(), order.protectsUntil(), order.expires(),
+                        order.displayStatus(now), order.quantityOrBatch(entry.rule().buyBatch())));
             }
             orders.sort(Comparator.comparingLong(TradeWire.OrderView::placed).thenComparing(TradeWire.OrderView::id));
         }

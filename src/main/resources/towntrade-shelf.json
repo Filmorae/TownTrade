@@ -1,0 +1,1762 @@
+[
+  {
+    "id": "minecraft:small_dripleaf",
+    "item": "minecraft:small_dripleaf",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:spore_blossom",
+    "item": "minecraft:spore_blossom",
+    "category": "nature",
+    "buyBatch": 1,
+    "buyPrice": 24,
+    "capacity": 3,
+    "restock": 1,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:azalea",
+    "item": "minecraft:azalea",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 8,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:flowering_azalea",
+    "item": "minecraft:flowering_azalea",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 8,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:azalea_leaves",
+    "item": "minecraft:azalea_leaves",
+    "category": "nature",
+    "buyBatch": 16,
+    "buyPrice": 8,
+    "capacity": 64,
+    "restock": 16,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:flowering_azalea_leaves",
+    "item": "minecraft:flowering_azalea_leaves",
+    "category": "nature",
+    "buyBatch": 16,
+    "buyPrice": 8,
+    "capacity": 64,
+    "restock": 16,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:pale_hanging_moss",
+    "item": "minecraft:pale_hanging_moss",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 8,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:open_eyeblossom",
+    "item": "minecraft:open_eyeblossom",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 8,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:firefly_bush",
+    "item": "minecraft:firefly_bush",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:bush",
+    "item": "minecraft:bush",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 8,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:mangrove_roots",
+    "item": "minecraft:mangrove_roots",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 8,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:fern",
+    "item": "minecraft:fern",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 6,
+    "capacity": 48,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:large_fern",
+    "item": "minecraft:large_fern",
+    "category": "nature",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:tall_grass",
+    "item": "minecraft:tall_grass",
+    "category": "nature",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:dead_bush",
+    "item": "minecraft:dead_bush",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 8,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:short_dry_grass",
+    "item": "minecraft:short_dry_grass",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 8,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:tall_dry_grass",
+    "item": "minecraft:tall_dry_grass",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 8,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:cactus_flower",
+    "item": "minecraft:cactus_flower",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 8,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:glow_lichen",
+    "item": "minecraft:glow_lichen",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 6,
+    "capacity": 48,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:pointed_dripstone",
+    "item": "minecraft:pointed_dripstone",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 8,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:sea_pickle",
+    "item": "minecraft:sea_pickle",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 8,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:seagrass",
+    "item": "minecraft:seagrass",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 6,
+    "capacity": 48,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:brain_coral",
+    "item": "minecraft:brain_coral",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:brain_coral_fan",
+    "item": "minecraft:brain_coral_fan",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:brain_coral_block",
+    "item": "minecraft:brain_coral_block",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 20,
+    "capacity": 8,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:bubble_coral",
+    "item": "minecraft:bubble_coral",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:bubble_coral_fan",
+    "item": "minecraft:bubble_coral_fan",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:bubble_coral_block",
+    "item": "minecraft:bubble_coral_block",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 20,
+    "capacity": 8,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:fire_coral",
+    "item": "minecraft:fire_coral",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:fire_coral_fan",
+    "item": "minecraft:fire_coral_fan",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:fire_coral_block",
+    "item": "minecraft:fire_coral_block",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 20,
+    "capacity": 8,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:horn_coral",
+    "item": "minecraft:horn_coral",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:horn_coral_fan",
+    "item": "minecraft:horn_coral_fan",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:horn_coral_block",
+    "item": "minecraft:horn_coral_block",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 20,
+    "capacity": 8,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:tube_coral",
+    "item": "minecraft:tube_coral",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:tube_coral_fan",
+    "item": "minecraft:tube_coral_fan",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:tube_coral_block",
+    "item": "minecraft:tube_coral_block",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 20,
+    "capacity": 8,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:crimson_fungus",
+    "item": "minecraft:crimson_fungus",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 8,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:warped_fungus",
+    "item": "minecraft:warped_fungus",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 8,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:crimson_roots",
+    "item": "minecraft:crimson_roots",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 6,
+    "capacity": 48,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:warped_roots",
+    "item": "minecraft:warped_roots",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 6,
+    "capacity": 48,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:nether_sprouts",
+    "item": "minecraft:nether_sprouts",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 8,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:twisting_vines",
+    "item": "minecraft:twisting_vines",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 6,
+    "capacity": 48,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:weeping_vines",
+    "item": "minecraft:weeping_vines",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 6,
+    "capacity": 48,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:warped_wart_block",
+    "item": "minecraft:warped_wart_block",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 10,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:shroomlight",
+    "item": "minecraft:shroomlight",
+    "category": "nature",
+    "buyBatch": 4,
+    "buyPrice": 10,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:chorus_flower",
+    "item": "minecraft:chorus_flower",
+    "category": "nature",
+    "buyBatch": 2,
+    "buyPrice": 12,
+    "capacity": 6,
+    "restock": 2,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:wither_rose",
+    "item": "minecraft:wither_rose",
+    "category": "nature",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:acacia_leaves",
+    "item": "minecraft:acacia_leaves",
+    "category": "nature",
+    "buyBatch": 16,
+    "buyPrice": 8,
+    "capacity": 64,
+    "restock": 16,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:birch_leaves",
+    "item": "minecraft:birch_leaves",
+    "category": "nature",
+    "buyBatch": 16,
+    "buyPrice": 8,
+    "capacity": 64,
+    "restock": 16,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:cherry_leaves",
+    "item": "minecraft:cherry_leaves",
+    "category": "nature",
+    "buyBatch": 16,
+    "buyPrice": 8,
+    "capacity": 64,
+    "restock": 16,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:dark_oak_leaves",
+    "item": "minecraft:dark_oak_leaves",
+    "category": "nature",
+    "buyBatch": 16,
+    "buyPrice": 8,
+    "capacity": 64,
+    "restock": 16,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:jungle_leaves",
+    "item": "minecraft:jungle_leaves",
+    "category": "nature",
+    "buyBatch": 16,
+    "buyPrice": 8,
+    "capacity": 64,
+    "restock": 16,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:mangrove_leaves",
+    "item": "minecraft:mangrove_leaves",
+    "category": "nature",
+    "buyBatch": 16,
+    "buyPrice": 8,
+    "capacity": 64,
+    "restock": 16,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:oak_leaves",
+    "item": "minecraft:oak_leaves",
+    "category": "nature",
+    "buyBatch": 16,
+    "buyPrice": 8,
+    "capacity": 64,
+    "restock": 16,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:pale_oak_leaves",
+    "item": "minecraft:pale_oak_leaves",
+    "category": "nature",
+    "buyBatch": 16,
+    "buyPrice": 8,
+    "capacity": 64,
+    "restock": 16,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:spruce_leaves",
+    "item": "minecraft:spruce_leaves",
+    "category": "nature",
+    "buyBatch": 16,
+    "buyPrice": 8,
+    "capacity": 64,
+    "restock": 16,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:red_mushroom_block",
+    "item": "minecraft:red_mushroom_block",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 10,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:brown_mushroom_block",
+    "item": "minecraft:brown_mushroom_block",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 10,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:mushroom_stem",
+    "item": "minecraft:mushroom_stem",
+    "category": "nature",
+    "buyBatch": 8,
+    "buyPrice": 10,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:sculk",
+    "item": "minecraft:sculk",
+    "category": "building",
+    "buyBatch": 8,
+    "buyPrice": 10,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:sculk_vein",
+    "item": "minecraft:sculk_vein",
+    "category": "building",
+    "buyBatch": 8,
+    "buyPrice": 10,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:sculk_sensor",
+    "item": "minecraft:sculk_sensor",
+    "category": "building",
+    "buyBatch": 1,
+    "buyPrice": 18,
+    "capacity": 4,
+    "restock": 1,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:sculk_catalyst",
+    "item": "minecraft:sculk_catalyst",
+    "category": "building",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:sculk_shrieker",
+    "item": "minecraft:sculk_shrieker",
+    "category": "building",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:amethyst_cluster",
+    "item": "minecraft:amethyst_cluster",
+    "category": "building",
+    "buyBatch": 4,
+    "buyPrice": 16,
+    "capacity": 8,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:small_amethyst_bud",
+    "item": "minecraft:small_amethyst_bud",
+    "category": "building",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:medium_amethyst_bud",
+    "item": "minecraft:medium_amethyst_bud",
+    "category": "building",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:large_amethyst_bud",
+    "item": "minecraft:large_amethyst_bud",
+    "category": "building",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 12,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:ochre_froglight",
+    "item": "minecraft:ochre_froglight",
+    "category": "building",
+    "buyBatch": 4,
+    "buyPrice": 20,
+    "capacity": 8,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:verdant_froglight",
+    "item": "minecraft:verdant_froglight",
+    "category": "building",
+    "buyBatch": 4,
+    "buyPrice": 20,
+    "capacity": 8,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:pearlescent_froglight",
+    "item": "minecraft:pearlescent_froglight",
+    "category": "building",
+    "buyBatch": 4,
+    "buyPrice": 20,
+    "capacity": 8,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:grass_block",
+    "item": "minecraft:grass_block",
+    "category": "building",
+    "buyBatch": 8,
+    "buyPrice": 8,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:mycelium",
+    "item": "minecraft:mycelium",
+    "category": "building",
+    "buyBatch": 8,
+    "buyPrice": 8,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:podzol",
+    "item": "minecraft:podzol",
+    "category": "building",
+    "buyBatch": 8,
+    "buyPrice": 8,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:crimson_nylium",
+    "item": "minecraft:crimson_nylium",
+    "category": "building",
+    "buyBatch": 8,
+    "buyPrice": 8,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:warped_nylium",
+    "item": "minecraft:warped_nylium",
+    "category": "building",
+    "buyBatch": 8,
+    "buyPrice": 8,
+    "capacity": 32,
+    "restock": 8,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:gilded_blackstone",
+    "item": "minecraft:gilded_blackstone",
+    "category": "building",
+    "buyBatch": 4,
+    "buyPrice": 16,
+    "capacity": 8,
+    "restock": 4,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:bee_nest",
+    "item": "minecraft:bee_nest",
+    "category": "nature",
+    "buyBatch": 1,
+    "buyPrice": 16,
+    "capacity": 4,
+    "restock": 1,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:cobweb",
+    "item": "minecraft:cobweb",
+    "category": "building",
+    "buyBatch": 4,
+    "buyPrice": 12,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:bell",
+    "item": "minecraft:bell",
+    "category": "building",
+    "buyBatch": 1,
+    "buyPrice": 22,
+    "capacity": 4,
+    "restock": 1,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:powder_snow_bucket",
+    "item": "minecraft:powder_snow_bucket",
+    "category": "ingredients",
+    "buyBatch": 1,
+    "buyPrice": 12,
+    "capacity": 4,
+    "restock": 1,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:lava_bucket",
+    "item": "minecraft:lava_bucket",
+    "category": "ingredients",
+    "buyBatch": 1,
+    "buyPrice": 12,
+    "capacity": 4,
+    "restock": 1,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:axolotl_bucket",
+    "item": "minecraft:axolotl_bucket",
+    "category": "bucket_mobs",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:cod_bucket",
+    "item": "minecraft:cod_bucket",
+    "category": "bucket_mobs",
+    "buyBatch": 1,
+    "buyPrice": 16,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:salmon_bucket",
+    "item": "minecraft:salmon_bucket",
+    "category": "bucket_mobs",
+    "buyBatch": 1,
+    "buyPrice": 16,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:pufferfish_bucket",
+    "item": "minecraft:pufferfish_bucket",
+    "category": "bucket_mobs",
+    "buyBatch": 1,
+    "buyPrice": 24,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:tropical_fish_bucket",
+    "item": "minecraft:tropical_fish_bucket",
+    "category": "bucket_mobs",
+    "buyBatch": 1,
+    "buyPrice": 24,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:tadpole_bucket",
+    "item": "minecraft:tadpole_bucket",
+    "category": "bucket_mobs",
+    "buyBatch": 1,
+    "buyPrice": 24,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:turtle_egg",
+    "item": "minecraft:turtle_egg",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 24,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:sniffer_egg",
+    "item": "minecraft:sniffer_egg",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 64,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:goat_horn",
+    "item": "minecraft:goat_horn",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:nautilus_shell",
+    "item": "minecraft:nautilus_shell",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:poisonous_potato",
+    "item": "minecraft:poisonous_potato",
+    "category": "ingredients",
+    "buyBatch": 4,
+    "buyPrice": 8,
+    "capacity": 16,
+    "restock": 4,
+    "minutes": 15
+  },
+  {
+    "id": "minecraft:totem_of_undying",
+    "item": "minecraft:totem_of_undying",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 224,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:nether_star",
+    "item": "minecraft:nether_star",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 768,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:wither_skeleton_skull",
+    "item": "minecraft:wither_skeleton_skull",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 192,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:skeleton_skull",
+    "item": "minecraft:skeleton_skull",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 128,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:zombie_head",
+    "item": "minecraft:zombie_head",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 128,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:creeper_head",
+    "item": "minecraft:creeper_head",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 160,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:piglin_head",
+    "item": "minecraft:piglin_head",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 160,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:elytra",
+    "item": "minecraft:elytra",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 512,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:copper_horse_armor",
+    "item": "minecraft:copper_horse_armor",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:iron_horse_armor",
+    "item": "minecraft:iron_horse_armor",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:golden_horse_armor",
+    "item": "minecraft:golden_horse_armor",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 64,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:diamond_horse_armor",
+    "item": "minecraft:diamond_horse_armor",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:copper_nautilus_armor",
+    "item": "minecraft:copper_nautilus_armor",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:iron_nautilus_armor",
+    "item": "minecraft:iron_nautilus_armor",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:golden_nautilus_armor",
+    "item": "minecraft:golden_nautilus_armor",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 64,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:diamond_nautilus_armor",
+    "item": "minecraft:diamond_nautilus_armor",
+    "category": "rare",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:globe_banner_pattern",
+    "item": "minecraft:globe_banner_pattern",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:piglin_banner_pattern",
+    "item": "minecraft:piglin_banner_pattern",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:flow_banner_pattern",
+    "item": "minecraft:flow_banner_pattern",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:guster_banner_pattern",
+    "item": "minecraft:guster_banner_pattern",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 64,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:angler_pottery_sherd",
+    "item": "minecraft:angler_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:archer_pottery_sherd",
+    "item": "minecraft:archer_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:arms_up_pottery_sherd",
+    "item": "minecraft:arms_up_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:blade_pottery_sherd",
+    "item": "minecraft:blade_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:bolt_armor_trim_smithing_template",
+    "item": "minecraft:bolt_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 128,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:brewer_pottery_sherd",
+    "item": "minecraft:brewer_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:burn_pottery_sherd",
+    "item": "minecraft:burn_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 56,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:coast_armor_trim_smithing_template",
+    "item": "minecraft:coast_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 72,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:danger_pottery_sherd",
+    "item": "minecraft:danger_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 56,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:dune_armor_trim_smithing_template",
+    "item": "minecraft:dune_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 72,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:explorer_pottery_sherd",
+    "item": "minecraft:explorer_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:eye_armor_trim_smithing_template",
+    "item": "minecraft:eye_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:flow_armor_trim_smithing_template",
+    "item": "minecraft:flow_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 160,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:flow_pottery_sherd",
+    "item": "minecraft:flow_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 72,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:friend_pottery_sherd",
+    "item": "minecraft:friend_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 56,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:guster_pottery_sherd",
+    "item": "minecraft:guster_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 56,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:heart_pottery_sherd",
+    "item": "minecraft:heart_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 56,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:heartbreak_pottery_sherd",
+    "item": "minecraft:heartbreak_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 56,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:host_armor_trim_smithing_template",
+    "item": "minecraft:host_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:howl_pottery_sherd",
+    "item": "minecraft:howl_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 56,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:miner_pottery_sherd",
+    "item": "minecraft:miner_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:mourner_pottery_sherd",
+    "item": "minecraft:mourner_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:plenty_pottery_sherd",
+    "item": "minecraft:plenty_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:prize_pottery_sherd",
+    "item": "minecraft:prize_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:raiser_armor_trim_smithing_template",
+    "item": "minecraft:raiser_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:rib_armor_trim_smithing_template",
+    "item": "minecraft:rib_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:scrape_pottery_sherd",
+    "item": "minecraft:scrape_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 56,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:sentry_armor_trim_smithing_template",
+    "item": "minecraft:sentry_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 72,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:shaper_armor_trim_smithing_template",
+    "item": "minecraft:shaper_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:sheaf_pottery_sherd",
+    "item": "minecraft:sheaf_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 56,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:shelter_pottery_sherd",
+    "item": "minecraft:shelter_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:silence_armor_trim_smithing_template",
+    "item": "minecraft:silence_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 160,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:skull_pottery_sherd",
+    "item": "minecraft:skull_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:snort_pottery_sherd",
+    "item": "minecraft:snort_pottery_sherd",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 48,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:snout_armor_trim_smithing_template",
+    "item": "minecraft:snout_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:spire_armor_trim_smithing_template",
+    "item": "minecraft:spire_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 128,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:tide_armor_trim_smithing_template",
+    "item": "minecraft:tide_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 128,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:vex_armor_trim_smithing_template",
+    "item": "minecraft:vex_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 128,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:ward_armor_trim_smithing_template",
+    "item": "minecraft:ward_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 128,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:wayfinder_armor_trim_smithing_template",
+    "item": "minecraft:wayfinder_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:wild_armor_trim_smithing_template",
+    "item": "minecraft:wild_armor_trim_smithing_template",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 72,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:disc_fragment_5",
+    "item": "minecraft:disc_fragment_5",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_11",
+    "item": "minecraft:music_disc_11",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_13",
+    "item": "minecraft:music_disc_13",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_blocks",
+    "item": "minecraft:music_disc_blocks",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_cat",
+    "item": "minecraft:music_disc_cat",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_chirp",
+    "item": "minecraft:music_disc_chirp",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_creator",
+    "item": "minecraft:music_disc_creator",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_creator_music_box",
+    "item": "minecraft:music_disc_creator_music_box",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 72,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_far",
+    "item": "minecraft:music_disc_far",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_lava_chicken",
+    "item": "minecraft:music_disc_lava_chicken",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 72,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_mall",
+    "item": "minecraft:music_disc_mall",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_mellohi",
+    "item": "minecraft:music_disc_mellohi",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_otherside",
+    "item": "minecraft:music_disc_otherside",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 72,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_pigstep",
+    "item": "minecraft:music_disc_pigstep",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 96,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_precipice",
+    "item": "minecraft:music_disc_precipice",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 64,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_relic",
+    "item": "minecraft:music_disc_relic",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 64,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_stal",
+    "item": "minecraft:music_disc_stal",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_strad",
+    "item": "minecraft:music_disc_strad",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_tears",
+    "item": "minecraft:music_disc_tears",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 64,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_wait",
+    "item": "minecraft:music_disc_wait",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  },
+  {
+    "id": "minecraft:music_disc_ward",
+    "item": "minecraft:music_disc_ward",
+    "category": "collectibles",
+    "buyBatch": 1,
+    "buyPrice": 36,
+    "capacity": 0,
+    "restock": 0,
+    "minutes": 20
+  }
+]

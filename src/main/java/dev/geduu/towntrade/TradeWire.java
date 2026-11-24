@@ -19,7 +19,7 @@ final class TradeWire {
     record Listing(int count, long next, int price) {}
     record QuotaInfo(long units, long ceiling, int rate) {}
     record OrderView(String id, String product, String owner, boolean own, long price,
-                     long placed, long arrives, long protection, long expires, String status) {}
+                     long placed, long arrives, long protection, long expires, String status, int quantity) {}
 
     record PermitView(ServiceConfig.PermitPricing pricing, long unusedMillis, long activeUntil) {}
     record GearSlot(int slot, String item, String name) {}
@@ -43,17 +43,17 @@ final class TradeWire {
     }
 
     record OpenPacket(String data) implements CustomPacketPayload {
-        static final Type<OpenPacket> TYPE = payloadType("open_v2");
+        static final Type<OpenPacket> TYPE = payloadType("open_v3");
         static final StreamCodec<ByteBuf, OpenPacket> CODEC = codec(1_500_000, OpenPacket::data, OpenPacket::new);
         @Override public Type<OpenPacket> type() { return TYPE; }
     }
     record UpdatePacket(String data) implements CustomPacketPayload {
-        static final Type<UpdatePacket> TYPE = payloadType("update_v2");
+        static final Type<UpdatePacket> TYPE = payloadType("update_v3");
         static final StreamCodec<ByteBuf, UpdatePacket> CODEC = codec(1_000_000, UpdatePacket::data, UpdatePacket::new);
         @Override public Type<UpdatePacket> type() { return TYPE; }
     }
     record ActionPacket(String data) implements CustomPacketPayload {
-        static final Type<ActionPacket> TYPE = payloadType("action_v2");
+        static final Type<ActionPacket> TYPE = payloadType("action_v3");
         static final StreamCodec<ByteBuf, ActionPacket> CODEC = codec(8192, ActionPacket::data, ActionPacket::new);
         @Override public Type<ActionPacket> type() { return TYPE; }
     }
