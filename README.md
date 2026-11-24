@@ -64,12 +64,9 @@ The `open` commands require the **Gamemasters** permission, normally operator le
 
 The first server start creates both files. Restart after editing. Prices are per batch in copper units. A product with a buy price and zero stock capacity is available through purchase orders. Seasonal multipliers are whole percentages, with `100` as the base price. Keep product IDs stable to preserve the link to saved stock and orders. The three currency item IDs are configurable. Changing the number of denominations or their 1/16/256 exchange rates requires a source change.
 
-## Saves and upgrades
+## World saves and backups
 
-The ledger is stored at `<world>/towntrade/economy.sqlite`. Stop the server and back up the world, including player data and the ledger, before upgrading. Keep the configuration if you want to preserve your shop settings. Replace the client and server JARs together.
-
-- **0.3.0 catalogue migration** adds planting items and retail entries for selected modded crops to older configuration files while preserving existing buyback settings and custom retail entries.
-- **0.4.0 permit migration** keeps the current expiry of an active permit and converts future reservations into banked time of the same length. Rolling back to 0.3.0 requires restoring the pre-upgrade world backup.
+TownTrade stores its ledger at `<world>/towntrade/economy.sqlite`. When backing up or moving a world, stop the server and copy the ledger together with the world and player data. Keep `config/towntrade/` with the backup to preserve your counter settings.
 
 ## Build
 
