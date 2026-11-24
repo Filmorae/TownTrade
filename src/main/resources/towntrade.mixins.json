@@ -1,0 +1,7 @@
+{
+  "required": true,
+  "package": "dev.geduu.towntrade.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": ["PlayerListAccess", "ServerPlayerTransactionTag", "PlayerDataStorageFlight"],
+  "injectors": {"defaultRequire": 1}
+}

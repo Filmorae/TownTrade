@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "towntrade",
+  "version": "${version}",
+  "name": "Town Trade",
+  "description": "Town trading, banking and account balances for Minecraft 26.1.2.",
+  "authors": [
+    "Filmorae (Concept, Testing)",
+    "ChatGPT (Development, Testing, Design)"
+  ],
+  "contact": {
+    "sources": "https://github.com/Filmorae/TownTrade",
+    "issues": "https://github.com/Filmorae/TownTrade/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/towntrade/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "dev.geduu.towntrade.TownTrade"
+    ],
+    "client": [
+      "dev.geduu.towntrade.TradeClient"
+    ]
+  },
+  "mixins": [
+    "towntrade.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.19.0",
+    "minecraft": "26.1.2",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}
