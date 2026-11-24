@@ -11,6 +11,8 @@ import java.util.Locale;
 import java.util.Map;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.language.I18n;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
@@ -48,12 +50,23 @@ final class OfferSearch {
             String name = component.getString();
             String key = component.getContents() instanceof TranslatableContents text
                     ? text.getKey() : stack.getItem().getDescriptionId();
-            String terms = name + " " + locale.getOrDefault(key, "") + " " + offer.item()
-                    + " " + offer.id() + " " + offer.item().replace('_', ' ');
+            String variation = collectibleKey(namespace, stack);
+            if (variation != null && I18n.exists(variation)) name = I18n.get(variation);
+            String terms = name + " " + locale.getOrDefault(key, "") + " "
+                    + (variation == null ? "" : locale.getOrDefault(variation, "")) + " "
+                    + offer.item() + " " + offer.id() + " " + offer.item().replace('_', ' ');
             var tags = stack.typeHolder().tags().map(tag -> normalize(tag.location().toString())).toList();
             entries.add(new Entry(offer, stack, name, normalize(terms), normalize(namespace + " " + source), tags));
         }
         return entries;
+    }
+
+    private static String collectibleKey(String namespace, ItemStack stack) {
+        if (!namespace.equals("minecraft")) return null;
+        String key = stack.getItem().getDescriptionId();
+        if (stack.has(DataComponents.JUKEBOX_PLAYABLE)) return key + ".desc";
+        if (key.endsWith("_armor_trim_smithing_template") || key.endsWith("_banner_pattern")) return key + ".new";
+        return null;
     }
 
     private Map<String, String> translations(String namespace) {

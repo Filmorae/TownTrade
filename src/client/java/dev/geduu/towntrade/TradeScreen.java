@@ -36,6 +36,7 @@ final class TradeScreen extends Screen {
     private final List<OfferSearch.Entry> entries;
     private final Map<String, OfferSearch.Entry> byId = new LinkedHashMap<>();
     private final List<String> categories;
+    private final List<TradeButton> categoryButtons = new ArrayList<>();
     private List<Group> groups = List.of();
     private List<TradeWire.OrderView> visibleOrders = List.of();
     private TradeWire.Board board;
@@ -51,6 +52,7 @@ final class TradeScreen extends Screen {
     private String quantity = "1";
     private int variant;
     private int offset;
+    private int categoryOffset;
     private boolean withdraw = true;
     private int denomination;
     private Tab tab = Tab.CATALOG;
@@ -80,7 +82,8 @@ final class TradeScreen extends Screen {
         var names = new ArrayList<String>();
         names.add("all");
         if (open.view() == TradeWire.View.BUY) {
-            for (String value : List.of("building", "farming", "minerals", "ingredients", "potions", "rare")) {
+            for (String value : List.of("building", "nature", "farming", "minerals", "ingredients", "potions",
+                    "bucket_mobs", "collectibles", "rare")) {
                 if (entries.stream().anyMatch(entry -> entry.offer().category().equals(value))) names.add(value);
             }
         }
@@ -133,15 +136,19 @@ final class TradeScreen extends Screen {
             addButton("catalog", x + 8, y + 30, tabWidth, 18, () -> setTab(Tab.CATALOG)).selected = () -> tab == Tab.CATALOG;
             addButton("orders", x + 12 + tabWidth, y + 30, tabWidth, 18, () -> setTab(Tab.ORDERS)).selected = () -> tab == Tab.ORDERS;
             addButton("mine", x + 16 + 2 * tabWidth, y + 30, tabWidth, 18, () -> setTab(Tab.MINE)).selected = () -> tab == Tab.MINE;
-            for (int index = 0; index < categories.size(); index++) {
-                String value = categories.get(index);
-                addButton("category." + value, x + 8, contentTop + index * 18,
+            categoryButtons.clear();
+            for (String value : categories) {
+                var button = addButton("category." + value, x + 8, contentTop,
                         listLeft - x - 14, 16, () -> {
                             category = value;
                             offset = 0;
                             refilter();
-                        }).selected = () -> category.equals(value);
+                            updateControls();
+                        });
+                button.selected = () -> category.equals(value);
+                categoryButtons.add(button);
             }
+            updateCategoryButtons();
         }
         searchBox = new EditBox(font, x + 10, y + 55, right - x - 20, 18, key("search"));
         searchBox.setMaxLength(100);
@@ -156,6 +163,27 @@ final class TradeScreen extends Screen {
         });
         addRenderableWidget(searchBox);
         if (open.view() == TradeWire.View.SELL) setInitialFocus(searchBox);
+    }
+
+    private int visibleCategoryRows() {
+        return Math.max(1, (bottom - contentTop - 8) / 18);
+    }
+
+    private int maxCategoryOffset() {
+        return Math.max(0, categoryButtons.size() - visibleCategoryRows());
+    }
+
+    private void updateCategoryButtons() {
+        categoryOffset = Math.clamp(categoryOffset, 0, maxCategoryOffset());
+        int rows = visibleCategoryRows();
+        for (int index = 0; index < categoryButtons.size(); index++) {
+            var button = categoryButtons.get(index);
+            int row = index - categoryOffset;
+            button.visible = tab == Tab.CATALOG && row >= 0 && row < rows;
+            button.active = button.visible;
+            button.setY(contentTop + row * 18);
+            if (!button.visible && getFocused() == button) setFocused(null);
+        }
     }
 
     private void buildControls() {
@@ -202,6 +230,7 @@ final class TradeScreen extends Screen {
         tab = value;
         category = value == Tab.CATALOG ? category : "all";
         offset = 0;
+        updateCategoryButtons();
         refilter();
         updateControls();
     }
@@ -441,13 +470,27 @@ final class TradeScreen extends Screen {
         currencies.amount(graphics, font, 0, board.balance(), balanceX, y + 13, 14, AMBER, true);
         if (open.view() == TradeWire.View.BANK) drawBank(graphics);
         else {
-            if (tab == Tab.CATALOG) drawGrid(graphics, mouseX, mouseY);
-            else drawOrders(graphics, mouseX, mouseY);
+            if (tab == Tab.CATALOG) {
+                drawGrid(graphics, mouseX, mouseY);
+                drawCategoryScroll(graphics);
+            } else {
+                drawOrders(graphics, mouseX, mouseY);
+            }
             drawDetails(graphics, mouseX, mouseY);
             drawIndicator(graphics);
         }
         super.extractRenderState(graphics, mouseX, mouseY, delta);
         if (overQuantity(mouseX, mouseY)) NumberScroll.hint(graphics, mouseX, mouseY);
+    }
+
+    private void drawCategoryScroll(GuiGraphicsExtractor graphics) {
+        if (maxCategoryOffset() == 0) return;
+        int left = listLeft - 4;
+        int height = visibleCategoryRows() * 18 - 2;
+        int thumb = Math.max(6, height * visibleCategoryRows() / categoryButtons.size());
+        int top = contentTop + (height - thumb) * categoryOffset / maxCategoryOffset();
+        graphics.fill(left, contentTop, left + 2, contentTop + height, LINE);
+        graphics.fill(left, top, left + 2, top + thumb, MUTED);
     }
 
     private void drawBank(GuiGraphicsExtractor graphics) {
@@ -738,6 +781,12 @@ final class TradeScreen extends Screen {
             return true;
         }
         numberScroll.reset();
+        if (vertical != 0 && tab == Tab.CATALOG && maxCategoryOffset() > 0
+                && contains(mouseX, mouseY, x + 8, contentTop, listLeft - x - 8, bottom - contentTop)) {
+            categoryOffset += vertical < 0 ? 1 : -1;
+            updateCategoryButtons();
+            return true;
+        }
         if (open.view() == TradeWire.View.BANK || vertical == 0 || !contains(mouseX, mouseY, listLeft, contentTop,
                 listRight - listLeft, bottom - contentTop)) return super.mouseScrolled(mouseX, mouseY, horizontal, vertical);
         offset = Math.max(0, Math.min(maxOffset(), offset + (vertical < 0 ? 1 : -1)));

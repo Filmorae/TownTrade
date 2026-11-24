@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class EconomyRulesTest {
     public static void main(String[] arguments) throws Exception {
@@ -46,6 +47,7 @@ public final class EconomyRulesTest {
                 """, TradeRules.Order.class);
         require(legacy.quantityOrBatch(1) == 1 && legacy.quantityOrBatch(8) == 8, "legacy orders fulfill one batch");
         testMineralUpgrade();
+        testShelfCatalog();
 
         testServiceRules(time);
         testRecovery(time);
@@ -89,6 +91,65 @@ public final class EconomyRulesTest {
             String upgradedFile = Files.readString(configFile);
             require(TradeConfig.load(directory).equals(upgraded) && Files.readString(configFile).equals(upgradedFile),
                     "mineral migration runs once");
+        } finally {
+            Files.deleteIfExists(configFile);
+            Files.deleteIfExists(directory);
+        }
+    }
+
+    private static void testShelfCatalog() throws Exception {
+        var directory = Files.createTempDirectory("towntrade-shelf");
+        var configFile = directory.resolve("economy.json");
+        try {
+            var fresh = TradeConfig.load(directory).products().stream()
+                    .collect(Collectors.toMap(TradeConfig.Product::id, product -> product));
+            var lichen = fresh.get("minecraft:glow_lichen");
+            require(lichen.stocked() && lichen.buyBatch() == 8 && lichen.buyPrice() == 6
+                    && lichen.capacity() == 48 && lichen.restock() == 8 && lichen.minutes() == 15, "lichen stock");
+            for (String id : List.of("axolotl", "cod", "salmon", "pufferfish", "tadpole", "tropical_fish")) {
+                var bucket = fresh.get("minecraft:" + id + "_bucket");
+                require(bucket.requestOnly() && bucket.buyBatch() == 1
+                        && bucket.category().equals("bucket_mobs"), "mob bucket order " + id);
+            }
+            require(fresh.get("minecraft:silence_armor_trim_smithing_template").requestOnly(), "trim order");
+            require(fresh.get("minecraft:nether_star").buyPrice() == 768
+                    && fresh.get("minecraft:elytra").buyPrice() == 512, "rare order prices");
+            require(!fresh.containsKey("minecraft:chainmail_helmet") && !fresh.containsKey("minecraft:trident")
+                    && !fresh.containsKey("minecraft:dead_brain_coral"), "requested exclusions");
+            require(!fresh.containsKey("minecraft:big_dripleaf") && !fresh.containsKey("minecraft:torchflower"),
+                    "deferred derivative items");
+
+            var legacy = TradeConfig.JSON.fromJson("""
+                    {
+                      "retailCatalogVersion": 1,
+                      "mineralsCatalogVersion": 1,
+                      "orderLimit": 4, "protectionMinutes": 5, "publicPremium": 20, "timezone":"Asia/Shanghai",
+                      "pools": {
+                        "building": {"capacity":48,"pointsPerMinute":2},
+                        "crops": {"capacity":48,"pointsPerMinute":2},
+                        "minerals": {"capacity":24,"pointsPerMinute":1}
+                      },
+                      "coins": [{"item":"minecraft:cobweb","value":1},
+                                {"item":"coins:iron_coin","value":16},{"item":"coins:gold_coin","value":256}],
+                      "products": [
+                        {"id":"custom_lichen","item":"minecraft:glow_lichen","category":"building",
+                         "buyBatch":2,"buyPrice":99,"capacity":6,"restock":2,"minutes":15},
+                        {"id":"minecraft:small_dripleaf","item":"minecraft:small_dripleaf","category":"building",
+                         "buyBatch":1,"buyPrice":99,"minutes":20}
+                      ]
+                    }
+                    """, com.google.gson.JsonObject.class);
+            Files.writeString(configFile, TradeConfig.JSON.toJson(legacy));
+            var expanded = TradeConfig.load(directory);
+            var products = expanded.products().stream().collect(Collectors.toMap(TradeConfig.Product::id, p -> p));
+            require(expanded.orderLimit() == 4 && products.get("custom_lichen").buyPrice() == 99,
+                    "custom settings survive shelf migration");
+            require(!products.containsKey("minecraft:glow_lichen") && !products.containsKey("minecraft:cobweb")
+                    && products.get("minecraft:small_dripleaf").buyPrice() == 99, "skip alternate IDs and currencies");
+            require(products.get("minecraft:sniffer_egg").requestOnly(), "new items added to existing config");
+            String migrated = Files.readString(configFile);
+            require(TradeConfig.load(directory).equals(expanded) && Files.readString(configFile).equals(migrated),
+                    "shelf migration runs once");
         } finally {
             Files.deleteIfExists(configFile);
             Files.deleteIfExists(directory);

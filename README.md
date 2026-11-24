@@ -23,7 +23,7 @@ Put the built TownTrade JAR in each instance’s `mods/` directory. The bank and
 | Counter | What players can do |
 | --- | --- |
 | Bank | Deposit and withdraw physical copper, iron, and gold coins at 1, 16, and 256 copper. The balance preview updates as quantities change. |
-| SuperBuy | Buy stocked materials and potion variants, or place purchase orders for selected rarer items. Search by name, mod such as `@minecraft`, or item tag such as `#minecraft:logs`. |
+| SuperBuy | Buy stocked materials, natural decorations, and potion variants, or place purchase orders for bucketed mobs, collectibles, and other rarer items. Search by name, mod such as `@minecraft`, or item tag such as `#minecraft:logs`. |
 | SuperSell | Sell items to the building, crops, and minerals counters. Each player has a separate regenerating quota per counter. Matching items can replenish SuperBuy stock. |
 | SuperPermit | Buy flight time and bank it for later. Use `/towntrade active` to activate all banked time or extend an active permit. An active permit counts down while the player is offline. If it expires during permit flight, the player falls normally and receives protection for that landing. |
 | SuperEnchant | Upgrade supported enchantments on equipment in the inventory or equipment slots. Quotes account for the item’s existing enchantments. Conflicting enchantments can coexist and curses are excluded by default. |
@@ -64,7 +64,7 @@ The `open` commands require the **Gamemasters** permission, normally operator le
 | `config/towntrade/economy.json` | Currency item IDs, product catalogue, prices, batch sizes, stock and restock, quotas, seasonal multipliers, order protection, premium, and time zone. |
 | `config/towntrade/services.json` | Flight duration and pricing, enchantment weights, and whether the counter sells curses. |
 
-The first server start creates both files. Restart after editing. Prices are per batch in copper units. A product with a buy price and zero stock capacity is available through purchase orders. Seasonal multipliers are whole percentages, with `100` as the base price. Keep product IDs stable to preserve the link to saved stock and orders. On first start after this update, untouched emerald and ancient debris defaults migrate to the new mineral listings. Existing ancient debris orders cannot be picked up once their listing is removed. They were payable at pickup, so the update requires no refund. The three currency item IDs are configurable. Changing the number of denominations or their 1/16/256 exchange rates requires a source change.
+The first server start creates both files. Restart after editing. Prices are per batch in copper units. A product with a buy price and zero stock capacity is available through purchase orders. Seasonal multipliers are whole percentages, with `100` as the base price. Keep product IDs stable to preserve the link to saved stock and orders. On first start after this update, untouched emerald and ancient debris defaults migrate to the new mineral listings. Existing ancient debris orders cannot be picked up once their listing is removed. They were payable at pickup, so the update requires no refund. The shelf expansion also adds missing listings to existing configs once. It keeps entries with custom product IDs or items and skips configured currencies. The three currency item IDs are configurable. Changing the number of denominations or their 1/16/256 exchange rates requires a source change.
 
 ## World saves and backups
 
