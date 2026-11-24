@@ -30,6 +30,8 @@ Put the built TownTrade JAR in each instance’s `mods/` directory. The bank and
 
 The default catalogue includes crops and planting items from Farmer’s Delight, Rustic Delight, Ube’s Delight, and Croptopia, including the 58 Croptopia 4.3.1 seed types and banana and cherry saplings. Search matches both English and Simplified Chinese where the item translations are available.
 
+A purchase order takes one to five batches, subject to the transaction item limit. Each default order batch contains one item. Successive batches cost 100%, 110%, 120%, 130%, and 140% of the base batch price. The combined price is rounded up to a copper coin and locked at placement. The buyer pays for and receives the whole order at pickup.
+
 Stock, quotas, purchase orders, and active permits use real time and account for elapsed time while the server is paused. By default, the requester has five minutes of exclusive access after an order arrives. It then becomes available to other players at a 20% premium and expires at the end of the following calendar day in the configured time zone. A requester can cancel an order and delete the cancelled record from **My orders**.
 
 Use the scroll wheel over a numeric field to change it by one, or hold Shift to change it by ten. The interface supports US and UK English, Simplified Chinese, and Traditional Chinese for Hong Kong/Macau and Taiwan.
@@ -62,7 +64,7 @@ The `open` commands require the **Gamemasters** permission, normally operator le
 | `config/towntrade/economy.json` | Currency item IDs, product catalogue, prices, batch sizes, stock and restock, quotas, seasonal multipliers, order protection, premium, and time zone. |
 | `config/towntrade/services.json` | Flight duration and pricing, enchantment weights, and whether the counter sells curses. |
 
-The first server start creates both files. Restart after editing. Prices are per batch in copper units. A product with a buy price and zero stock capacity is available through purchase orders. Seasonal multipliers are whole percentages, with `100` as the base price. Keep product IDs stable to preserve the link to saved stock and orders. The three currency item IDs are configurable. Changing the number of denominations or their 1/16/256 exchange rates requires a source change.
+The first server start creates both files. Restart after editing. Prices are per batch in copper units. A product with a buy price and zero stock capacity is available through purchase orders. Seasonal multipliers are whole percentages, with `100` as the base price. Keep product IDs stable to preserve the link to saved stock and orders. On first start after this update, untouched emerald and ancient debris defaults migrate to the new mineral listings. Existing ancient debris orders cannot be picked up once their listing is removed. They were payable at pickup, so the update requires no refund. The three currency item IDs are configurable. Changing the number of denominations or their 1/16/256 exchange rates requires a source change.
 
 ## World saves and backups
 

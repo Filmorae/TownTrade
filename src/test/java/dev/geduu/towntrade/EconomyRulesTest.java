@@ -24,20 +24,75 @@ public final class EconomyRulesTest {
         require(TradeRules.quotaNow(quota, pool, time + 6 * minute) == 18 * TradeRules.POINT, "rolling quota");
         require(TradeRules.quotaNow(quota, pool, time + 20 * minute) == pool.ceiling(), "quota cap");
         require(TradeRules.quotaNow(quota, pool, time - minute) == quota.units(), "backward clock");
+        require(TradeRules.orderPrice(36, 1) == 36 && TradeRules.orderPrice(36, 2) == 76
+                && TradeRules.orderPrice(36, 3) == 119 && TradeRules.orderPrice(36, 4) == 166
+                && TradeRules.orderPrice(36, 5) == 216, "successive order batches increase the marginal price");
+        require(TradeRules.maxOrderBatches(1) == 5 && TradeRules.maxOrderBatches(1024) == 2
+                && TradeRules.maxOrderBatches(2304) == 1, "order batch limits");
         require(TradeRules.publicPrice(36, 20) == 44 && TradeRules.publicPrice(1, 20) == 2, "public premium");
         require(TradeRules.orderExpiry(time, ZoneId.of("Asia/Shanghai"))
                 == Instant.parse("2026-11-24T16:00:00Z").toEpochMilli(), "next civil day expires");
         var order = new TradeRules.Order("order-id", "player", "name", "example", 10, time, time + minute,
-                time + 6 * minute, time + 100 * minute, "active");
+                time + 6 * minute, time + 100 * minute, "active", 5);
         require(order.displayStatus(time).equals("waiting"), "waiting");
         require(order.displayStatus(time + minute).equals("protected"), "first moment of protection");
         require(order.displayStatus(time + 6 * minute).equals("available"), "end of protection");
         require(order.displayStatus(time + 100 * minute).equals("expired"), "end of listing");
-        require(order.closed("bought_by_other").displayStatus(time).equals("bought_by_other"), "closed");
+        var purchased = order.closed("bought_by_other");
+        require(purchased.displayStatus(time).equals("bought_by_other") && purchased.quantityOrBatch(1) == 5,
+                "closing preserves the order quantity");
+        var legacy = TradeConfig.JSON.fromJson("""
+                {"id":"legacy","owner":"player","ownerName":"Player","product":"item","price":10,"status":"active"}
+                """, TradeRules.Order.class);
+        require(legacy.quantityOrBatch(1) == 1 && legacy.quantityOrBatch(8) == 8, "legacy orders fulfill one batch");
+        testMineralUpgrade();
 
         testServiceRules(time);
         testRecovery(time);
         System.out.println("Town Trade economy rules and journal recovery passed");
+    }
+
+    private static void testMineralUpgrade() throws Exception {
+        var directory = Files.createTempDirectory("towntrade-minerals");
+        var configFile = directory.resolve("economy.json");
+        try {
+            var defaults = TradeConfig.load(directory);
+            var rows = defaults.products().stream()
+                    .filter(rule -> !List.of("minecraft:emerald", "minecraft:netherite_ingot").contains(rule.id()))
+                    .toList();
+            var legacy = TradeConfig.JSON.toJsonTree(defaults).getAsJsonObject();
+            var products = TradeConfig.JSON.toJsonTree(rows).getAsJsonArray();
+            var mineralRows = TradeConfig.JSON.fromJson("""
+                    [
+                      {"id":"minecraft:emerald","item":"minecraft:emerald","category":"minerals",
+                       "buyBatch":1,"buyPrice":22,"capacity":4,"restock":1,"minutes":20},
+                      {"id":"minecraft:emerald_ore","item":"minecraft:emerald_ore","category":"minerals",
+                       "sellBatch":1,"sellPrice":12,"pool":"minerals","quota":8},
+                      {"id":"minecraft:deepslate_emerald_ore","item":"minecraft:deepslate_emerald_ore","category":"minerals",
+                       "sellBatch":1,"sellPrice":13,"pool":"minerals","quota":8},
+                      {"id":"minecraft:ancient_debris","item":"minecraft:ancient_debris","category":"minerals",
+                       "buyBatch":1,"buyPrice":55,"minutes":20,"sellBatch":1,"sellPrice":18,"pool":"minerals","quota":10}
+                    ]
+                    """, com.google.gson.JsonArray.class);
+            products.addAll(mineralRows);
+            legacy.add("products", products);
+            legacy.addProperty("retailCatalogVersion", 1);
+            Files.writeString(configFile, TradeConfig.JSON.toJson(legacy));
+            var upgraded = TradeConfig.load(directory);
+            var byId = upgraded.products().stream().collect(java.util.stream.Collectors.toMap(
+                    TradeConfig.Product::id, product -> product));
+            require(byId.get("minecraft:emerald").sellPrice() == 4 && !byId.containsKey("minecraft:emerald_ore"),
+                    "default emerald ore buyback becomes an emerald buyback");
+            require(byId.get("minecraft:deepslate_emerald_ore").sellPrice() == 13, "custom ore buyback is preserved");
+            require(byId.get("minecraft:netherite_ingot").requestOnly()
+                    && !byId.containsKey("minecraft:ancient_debris"), "ingot uses its own product ID");
+            String upgradedFile = Files.readString(configFile);
+            require(TradeConfig.load(directory).equals(upgraded) && Files.readString(configFile).equals(upgradedFile),
+                    "mineral migration runs once");
+        } finally {
+            Files.deleteIfExists(configFile);
+            Files.deleteIfExists(directory);
+        }
     }
 
     private static void testServiceRules(long now) {
@@ -85,9 +140,11 @@ public final class EconomyRulesTest {
                 var permit = new FlightPermits.Credit(TradeRules.MINUTE, 0);
                 store.commit(new TradeStore.Pending("permit", "permit", new TradeStore.Change("player", 0L, permit)), time);
                 var closed = new TradeRules.Order("cancelled", "player", "Player", "item",
-                        10, time, time, time, time + TradeRules.MINUTE, "cancelled");
+                        10, time, time, time, time + TradeRules.MINUTE, "cancelled", 4);
                 store.commit(new TradeStore.Pending("cancel", "cancel", new TradeStore.Change(
                         "player", null, null, null, null, null, closed)), time);
+                require(store.recoverAndLoad((player, id) -> false, time).orders.get(closed.id()).quantity() == 4,
+                        "order quantity survives a reload");
                 store.commit(new TradeStore.Pending("delete", "delete_order", new TradeStore.Change(
                         "player", null, null, null, null, null, null, null, closed.id())), time);
                 var persisted = store.recoverAndLoad((player, id) -> false, time);

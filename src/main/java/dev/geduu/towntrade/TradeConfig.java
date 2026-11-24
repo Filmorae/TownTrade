@@ -53,7 +53,9 @@ record TradeConfig(int orderLimit, int protectionMinutes, int publicPremium, Str
         }
         var document = JSON.fromJson(Files.readString(file), JsonObject.class);
         TradeConfig config = parse(document);
-        if (CatalogRetailUpgrade.apply(document, defaults)) {
+        boolean retailUpgraded = CatalogRetailUpgrade.apply(document, defaults);
+        boolean mineralsUpgraded = CatalogMineralsUpgrade.apply(document, defaults);
+        if (retailUpgraded || mineralsUpgraded) {
             config = parse(document);
             write(file, document);
         }

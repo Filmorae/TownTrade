@@ -254,8 +254,10 @@ final class TradeScreen extends Screen {
             grouped.forEach((name, matches) -> filtered.add(new Group(name, List.copyOf(matches))));
             groups = List.copyOf(filtered);
             if (group() == null && !groups.isEmpty()) {
-                selected = groups.getFirst().title();
+                var first = groups.getFirst();
+                selected = first.title();
                 variant = 0;
+                if (first.entries().getFirst().offer().orderOnly()) setQuantity(1);
             }
         } else {
             visibleOrders = board.orders().stream().filter(value -> {
@@ -323,10 +325,14 @@ final class TradeScreen extends Screen {
             return new Command("claim", order.id(), 1, order.price(), issue);
         }
         if (offer.orderOnly()) {
+            int maximum = TradeRules.maxOrderBatches(offer.batch());
+            if (count < 1 || count > maximum) {
+                return new Command("order", offer.id(), count, 0, "invalid");
+            }
             boolean duplicate = board.orders().stream().anyMatch(order ->
                     order.own() && order.product().equals(offer.id()) && active(order));
             String issue = duplicate ? "already_ordered" : board.activeOrders() >= board.orderLimit() ? "order_limit" : "";
-            return new Command("order", offer.id(), 1, offer.basePrice(), issue);
+            return new Command("order", offer.id(), count, TradeRules.orderPrice(offer.basePrice(), count), issue);
         }
         var listing = board.listings().get(offer.id());
         long price = listing == null ? offer.basePrice() : listing.price();
@@ -370,7 +376,7 @@ final class TradeScreen extends Screen {
         actionButton.setMessage(key(pending ? "working" : command.action().isEmpty() ? "confirm" : command.action()));
         actionButton.active = !pending && command.invalid().isEmpty();
         boolean quantityVisible = open.view() == TradeWire.View.BANK
-                || (tab == Tab.CATALOG && selectedOffer() != null && !selectedOffer().offer().orderOnly());
+                || (tab == Tab.CATALOG && selectedOffer() != null);
         quantityBox.visible = plus.visible = minus.visible = quantityVisible;
         minus.active = !pending && amount() > 1;
         plus.active = !pending && command(amount() + 1).invalid().isEmpty();
@@ -509,7 +515,7 @@ final class TradeScreen extends Screen {
                 graphics.outline(listLeft, top, listRight - listLeft, ORDER_ROW - 2, hovered ? AMBER : GREEN);
             }
             graphics.fakeItem(item.stack(), listLeft + 3, top + 1);
-            String label = item.name() + " · " + order.owner();
+            String label = order.quantity() + " × " + item.name() + " · " + order.owner();
             boolean canDelete = canDelete(order);
             int reserve = canDelete ? ORDER_DELETE_WIDTH + 3 : 0;
             graphics.text(font, font.plainSubstrByWidth(label, Math.max(12, listRight - listLeft - 26 - reserve)),
@@ -553,6 +559,11 @@ final class TradeScreen extends Screen {
         } else if (offer.orderOnly()) {
             graphics.text(font, key("arrival_estimate", duration(offer.waitMillis())), left, top + 23, MUTED);
             graphics.text(font, key("order_slots", board.activeOrders(), board.orderLimit()), left, top + 37, MUTED);
+            int maximum = TradeRules.maxOrderBatches(offer.batch());
+            if (top + 59 <= bottom - 77) {
+                detailText(graphics, key("order_quantity", amount() * offer.batch(), maximum * offer.batch()),
+                        left, top + 50, MUTED);
+            }
         } else if (listing != null) {
             if (offer.potion() != null) {
                 drawPotion(graphics, entry, left, top + 21);
@@ -578,7 +589,7 @@ final class TradeScreen extends Screen {
                 }
             }
         }
-        if (!command.action().isEmpty()) {
+        if (!command.action().isEmpty() && (!command.action().equals("order") || command.quote() > 0)) {
             boolean sell = command.action().equals("sell");
             String label = command.action().equals("order") ? "locked_price" : sell ? "payout" : "total";
             currencies.price(graphics, font, key("money." + label), command.quote(),
@@ -607,7 +618,7 @@ final class TradeScreen extends Screen {
 
     private void drawOrderDetails(GuiGraphicsExtractor graphics, TradeWire.OrderView order, int left, int top) {
         if (order == null) return;
-        graphics.text(font, key("order_owner", order.owner()), left, top, MUTED);
+        detailText(graphics, key("order_owner", order.owner()).copy().append(" · ×" + order.quantity()), left, top, MUTED);
         graphics.text(font, key("status." + order.status()), left, top + 13, GREEN);
         if (order.status().equals("waiting")) {
             graphics.text(font, key("arrival_estimate", duration(order.arrives() - now())), left, top + 26, MUTED);

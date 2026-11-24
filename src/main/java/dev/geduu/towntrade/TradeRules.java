@@ -3,13 +3,14 @@ package dev.geduu.towntrade;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Locale;
-import java.util.Locale;
 
 final class TradeRules {
     static final long MINUTE = 60_000;
     static final long POINT = 60_000;
     static final long MAX_BALANCE = 1_000_000_000;
     static final long NO_TIME = Long.MAX_VALUE;
+    private static final int MAX_ORDER_BATCHES = 5;
+    private static final int MAX_TRADE_ITEMS = 2304;
 
     enum Pool {
         BUILDING, CROPS, MINERALS;
@@ -28,7 +29,7 @@ final class TradeRules {
     }
 
     record Order(String id, String owner, String ownerName, String product, long price,
-                 long placed, long arrives, long protectsUntil, long expires, String status) {
+                 long placed, long arrives, long protectsUntil, long expires, String status, int quantity) {
         boolean active(long now) {
             return status.equals("active") && now < expires;
         }
@@ -44,8 +45,12 @@ final class TradeRules {
             return now < protectsUntil ? "protected" : "available";
         }
 
+        int quantityOrBatch(int batch) {
+            return quantity == 0 ? batch : quantity;
+        }
+
         Order closed(String outcome) {
-            return new Order(id, owner, ownerName, product, price, placed, arrives, protectsUntil, expires, outcome);
+            return new Order(id, owner, ownerName, product, price, placed, arrives, protectsUntil, expires, outcome, quantity);
         }
     }
 
@@ -79,6 +84,16 @@ final class TradeRules {
 
     static long sellPrice(long base, int percentage) {
         return Math.max(1, (base * percentage + 50) / 100);
+    }
+
+    static int maxOrderBatches(int batchSize) {
+        return Math.min(MAX_ORDER_BATCHES, MAX_TRADE_ITEMS / batchSize);
+    }
+
+    static long orderPrice(long batchPrice, int batches) {
+        // Successive batches cost 100%, 110%, 120%, 130% and 140%.
+        long percent = 100L * batches + 5L * batches * (batches - 1);
+        return ceilDiv(batchPrice * percent, 100);
     }
 
     static long publicPrice(long price, int premiumPercent) {
