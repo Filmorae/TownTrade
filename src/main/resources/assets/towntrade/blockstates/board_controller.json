@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "towntrade:block/board_panel"
+    },
+    "facing=east": {
+      "model": "towntrade:block/board_panel",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "towntrade:block/board_panel",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "towntrade:block/board_panel",
+      "y": 270
+    }
+  }
+}

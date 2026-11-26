@@ -4,7 +4,7 @@
 
 <img src="src/main/resources/assets/towntrade/icon.png" alt="TownTrade trading window icon" width="96" align="right">
 
-TownTrade is a configurable economy and trading system for Minecraft Java servers. It adds a bank, server shops that buy and sell items, timed purchase orders, flight permits, and an enchanting counter. The default economy uses Coins 3.0.0. Server operators can open counters with commands or connect them to NPC dialogue.
+TownTrade is a configurable economy and trading system for Minecraft Java servers. It adds a bank, server shops that buy and sell items, timed purchase orders, flight permits, an enchanting counter, and a public trading board in the world. The default economy uses Coins 3.0.0. Server operators can open counters with commands or connect them to NPC dialogue.
 
 ## Requirements
 
@@ -32,9 +32,21 @@ The default catalogue includes crops and planting items from Farmer’s Delight,
 
 A purchase order takes one to five batches, subject to the transaction item limit. Each default order batch contains one item. Successive batches cost 100%, 110%, 120%, 130%, and 140% of the base batch price. The combined price is rounded up to a copper coin and locked at placement. The buyer pays for and receives the whole order at pickup.
 
-Stock, quotas, purchase orders, and active permits use real time and account for elapsed time while the server is paused. By default, the requester has five minutes of exclusive access after an order arrives. It then becomes available to other players at a 20% premium and expires at the end of the following calendar day in the configured time zone. A requester can cancel an order and delete the cancelled record from **My orders**.
+Stock, quotas, purchase orders, and active permits use real time and account for elapsed time while the server is paused. By default, the requester has five minutes of exclusive access after an order arrives. It then becomes available to other players at a 20% premium and expires at the end of the following calendar day in the configured time zone. **My orders** shows which orders are in progress, available, completed, cancelled, or expired. The requester can delete completed and cancelled records. A new Nether Star order costs five gold coins per base batch. Existing orders keep their locked quotes.
 
 Use the scroll wheel over a numeric field to change it by one, or hold Shift to change it by ten. The interface supports US and UK English, Simplified Chinese, and Traditional Chinese for Hong Kong/Macau and Taiwan.
+
+Large ferns and tall grass use regular stock, with a default capacity of 48 each and 12 added every 15 minutes. Orders placed before their move to regular stock can still be picked up at their locked prices.
+
+## Civic Trading Board
+
+Place Civic Trading Board Panels in a flat rectangle facing the same way. Crouch and right-click two opposite corners from the front to assemble the board, using empty hands or holding a panel. A 9×6 rectangle uses 54 panels. Other rectangles within 3–9 blocks wide and 2–6 blocks high are supported when their aspect ratio is between 4:3 and 2:1. Breaking a panel leaves the other panels available for reuse.
+
+Find the panel in Functional Blocks or craft six with three white stained glass panes above an iron nugget, redstone dust, and an iron nugget. Operators can also use `/give @s towntrade:board_panel 54`.
+
+The overview shows the status of SuperBuy, SuperSell, SuperPermit, and SuperEnchant, along with the next three restocks. While there are active orders, the board alternates between the overview and pages of three order notices. Each notice shows the requester, public price, expected arrival, the end of the requester's reservation, and the public purchase deadline. Completed, cancelled and expired orders leave the board. Purchases and pickup take place at the SuperBuy counter.
+
+The display uses a LabPBR emission map with shaders that support it, such as Photon with `SPECULAR_MAPPING` enabled. Flashback replays show the recorded public snapshot and scheduled times.
 
 ## Commands
 

@@ -42,6 +42,9 @@ public final class EconomyRulesTest {
         var purchased = order.closed("bought_by_other");
         require(purchased.displayStatus(time).equals("bought_by_other") && purchased.quantityOrBatch(1) == 5,
                 "closing preserves the order quantity");
+        require(TradeRules.deletableOrder(purchased.status()) && TradeRules.deletableOrder("claimed")
+                && TradeRules.deletableOrder("cancelled") && !TradeRules.deletableOrder(order.status())
+                && !TradeRules.deletableOrder("expired"), "only cancelled or completed orders can be deleted");
         var legacy = TradeConfig.JSON.fromJson("""
                 {"id":"legacy","owner":"player","ownerName":"Player","product":"item","price":10,"status":"active"}
                 """, TradeRules.Order.class);
@@ -112,12 +115,44 @@ public final class EconomyRulesTest {
                         && bucket.category().equals("bucket_mobs"), "mob bucket order " + id);
             }
             require(fresh.get("minecraft:silence_armor_trim_smithing_template").requestOnly(), "trim order");
-            require(fresh.get("minecraft:nether_star").buyPrice() == 768
+            require(fresh.get("minecraft:nether_star").buyPrice() == 1280
                     && fresh.get("minecraft:elytra").buyPrice() == 512, "rare order prices");
+            for (String plant : List.of("minecraft:large_fern", "minecraft:tall_grass")) {
+                var stock = fresh.get(plant);
+                require(stock.stocked() && !stock.requestOnly() && stock.capacity() == 48 && stock.restock() == 12
+                        && stock.minutes() == 15 && stock.buyPrice() == 36, "plants now share the regular stock rules");
+                require(ShelfCatalog.acceptsExistingOrder(stock), "legacy plant orders remain fulfillable");
+            }
             require(!fresh.containsKey("minecraft:chainmail_helmet") && !fresh.containsKey("minecraft:trident")
                     && !fresh.containsKey("minecraft:dead_brain_coral"), "requested exclusions");
             require(!fresh.containsKey("minecraft:big_dripleaf") && !fresh.containsKey("minecraft:torchflower"),
                     "deferred derivative items");
+            var oldShelf = TradeConfig.JSON.fromJson(Files.readString(configFile), com.google.gson.JsonObject.class);
+            oldShelf.addProperty("shelfCatalogVersion", 1);
+            var oldStar = oldShelf.getAsJsonArray("products").asList().stream().map(value -> value.getAsJsonObject())
+                    .filter(value -> value.get("id").getAsString().equals("minecraft:nether_star")).findFirst().orElseThrow();
+            oldStar.addProperty("buyPrice", 768);
+            Files.writeString(configFile, TradeConfig.JSON.toJson(oldShelf));
+            require(starPrice(TradeConfig.load(directory)) == 1280, "old default star price is upgraded");
+            oldStar.addProperty("buyPrice", 900);
+            Files.writeString(configFile, TradeConfig.JSON.toJson(oldShelf));
+            require(starPrice(TradeConfig.load(directory)) == 900, "custom star pricing is preserved");
+            oldShelf.addProperty("shelfCatalogVersion", 2);
+            for (var element : oldShelf.getAsJsonArray("products")) {
+                var row = element.getAsJsonObject();
+                String id = row.get("id").getAsString();
+                if (!id.equals("minecraft:large_fern") && !id.equals("minecraft:tall_grass")) continue;
+                row.addProperty("capacity", 0);
+                row.addProperty("restock", 0);
+                row.addProperty("minutes", 20);
+                if (id.equals("minecraft:tall_grass")) row.addProperty("buyPrice", 77);
+            }
+            Files.writeString(configFile, TradeConfig.JSON.toJson(oldShelf));
+            var plants = TradeConfig.load(directory).products().stream()
+                    .collect(Collectors.toMap(TradeConfig.Product::id, product -> product));
+            require(plants.get("minecraft:large_fern").capacity() == 48, "old default plants move to stock");
+            require(plants.get("minecraft:tall_grass").requestOnly()
+                    && plants.get("minecraft:tall_grass").buyPrice() == 77, "custom plant rules are preserved");
 
             var legacy = TradeConfig.JSON.fromJson("""
                     {
@@ -154,6 +189,11 @@ public final class EconomyRulesTest {
             Files.deleteIfExists(configFile);
             Files.deleteIfExists(directory);
         }
+    }
+
+    private static int starPrice(TradeConfig config) {
+        return config.products().stream().filter(product -> product.id().equals("minecraft:nether_star"))
+                .findFirst().orElseThrow().buyPrice();
     }
 
     private static void testServiceRules(long now) {
@@ -200,9 +240,9 @@ public final class EconomyRulesTest {
                 require(replayed.balances.get("player") == 256, "receipt deduplication");
                 var permit = new FlightPermits.Credit(TradeRules.MINUTE, 0);
                 store.commit(new TradeStore.Pending("permit", "permit", new TradeStore.Change("player", 0L, permit)), time);
-                var closed = new TradeRules.Order("cancelled", "player", "Player", "item",
-                        10, time, time, time, time + TradeRules.MINUTE, "cancelled", 4);
-                store.commit(new TradeStore.Pending("cancel", "cancel", new TradeStore.Change(
+                var closed = new TradeRules.Order("claimed", "player", "Player", "item",
+                        10, time, time, time, time + TradeRules.MINUTE, "claimed", 4);
+                store.commit(new TradeStore.Pending("claim", "claim", new TradeStore.Change(
                         "player", null, null, null, null, null, closed)), time);
                 require(store.recoverAndLoad((player, id) -> false, time).orders.get(closed.id()).quantity() == 4,
                         "order quantity survives a reload");

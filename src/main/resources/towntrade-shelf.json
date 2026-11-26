@@ -125,9 +125,9 @@
     "category": "nature",
     "buyBatch": 1,
     "buyPrice": 36,
-    "capacity": 0,
-    "restock": 0,
-    "minutes": 20
+    "capacity": 48,
+    "restock": 12,
+    "minutes": 15
   },
   {
     "id": "minecraft:tall_grass",
@@ -135,9 +135,9 @@
     "category": "nature",
     "buyBatch": 1,
     "buyPrice": 36,
-    "capacity": 0,
-    "restock": 0,
-    "minutes": 20
+    "capacity": 48,
+    "restock": 12,
+    "minutes": 15
   },
   {
     "id": "minecraft:dead_bush",
@@ -954,7 +954,7 @@
     "item": "minecraft:nether_star",
     "category": "rare",
     "buyBatch": 1,
-    "buyPrice": 768,
+    "buyPrice": 1280,
     "capacity": 0,
     "restock": 0,
     "minutes": 20

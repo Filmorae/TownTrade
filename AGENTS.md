@@ -14,6 +14,7 @@ TownTrade targets Minecraft Java 26.1.2, Fabric, and JDK 25. The mod ID and comm
 | Flight and enchanting | `FlightPermits`, `EnchantDesk`, `EnchantPricing` |
 | Client/server protocol | `TradeWire` in the main source set, `TradeClient` in the client source set |
 | Client UI | `src/client/java/dev/geduu/towntrade/`, including `TradeScreen`, `BalanceScreen`, `PermitScreen`, and `EnchantScreen` |
+| Civic board | `TradeBoard`, `BoardPanel`, `TradeBoardEntity`, `BoardSnapshot`, and `TradeBoardRenderer` |
 | Client search and presentation | `OfferSearch`, `NumberScroll`, `CurrencyDisplay`, and `src/main/resources/assets/towntrade/lang/` |
 | Tests | `src/test/java/dev/geduu/towntrade/EconomyRulesTest.java` |
 
@@ -42,8 +43,16 @@ Fabric Loom separates common and client sources. Keep client-only Minecraft clas
 - Timed state derives from epoch milliseconds. Stock and quota catch up after a pause, and order expiry uses the configured civil time zone. The first landing after an airborne permit revocation is protected once. The player data mixins clear temporary vanilla flight abilities on disk and retain the information needed to handle reconnects. Keep creative and spectator abilities distinct from TownTrade’s temporary abilities.
 - Flight purchases add to unused credit and do not change the existing expiry until activation. Activation consumes the total unused credit and extends a running permit or starts one at the current time. The SQLite migration converts legacy permit window arrays into credit records. An already started window keeps its expiry and future windows become unused credit.
 
+## Civic Trading Board
+
+- `TradeBoard` validates a same-facing panel rectangle at assembly and installs one controller at its lower-left corner. Other panels are ordinary blocks. Check controller bounds and load state before reading across a chunk boundary.
+- The controller refreshes at most once per second when a nearby player tracks it. `TradeService.publicBoard` caches one projection for all boards and invalidates it on committed stock or order changes and scheduled transitions. The public snapshot includes requester display names and scheduled times. Keep player UUIDs, balances, inventories, and quotas private.
+- `TradeBoardEntity` persists the display data and sends updates through vanilla block-entity sync. Keep older `BoardSnapshot` data decodable for existing worlds and Flashback recordings. The renderer handles page rotation and countdowns on the client. Flashback renders the recorded snapshot with scheduled times.
+- `board_pixels.png` is the screen texture and `board_pixels_s.png` supplies LabPBR emission. Keep the screen geometry's UVs nondegenerate and test text contrast with and without shaders.
+
 ## Build and verify
 
 - Run `./gradlew build` with JDK 25. The Java `economyRulesTest` task is attached to `test` and can also be run directly. It covers pricing, timers, permits, journal recovery, and order deletion. Fabric Loom packages the client classes and the SQLite JDBC dependency in the mod JAR. Preserve the executable bit on `gradlew`.
 - Use a clean temporary world for manual checks. Start a dedicated server with Fabric API and the same TownTrade JAR as the client. Install Coins 3.0.0 or configure equivalent registered items. Check the player commands, administrator-targeted counters, deposit/withdrawal, purchase and buyback, and the affected UI and language. Add optional mods when testing their integration.
 - For economy or data changes, exercise simultaneous operations, rejected deals, restart persistence, and migration from a representative older save. For flight changes, check activation, extension, reconnect, midair expiry, and a normal second fall. For mods or item catalogue changes, test both with and without the optional dependency.
+- For board changes, assemble a 9×6 board across a chunk border, test several pages of active orders, and verify a completed order leaves the display while its history remains. Check Flashback recording, seeking, and export against a world with a populated board.

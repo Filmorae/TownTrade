@@ -18,6 +18,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageTypes;
 import org.slf4j.Logger;
@@ -29,6 +30,8 @@ public final class TownTrade implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        var board = TradeBoard.INSTANCE;
+        board.register();
         PayloadTypeRegistry.clientboundPlay().register(TradeWire.OpenPacket.TYPE, TradeWire.OpenPacket.CODEC);
         PayloadTypeRegistry.clientboundPlay().register(TradeWire.UpdatePacket.TYPE, TradeWire.UpdatePacket.CODEC);
         PayloadTypeRegistry.serverboundPlay().register(TradeWire.ActionPacket.TYPE, TradeWire.ActionPacket.CODEC);
@@ -43,6 +46,7 @@ public final class TownTrade implements ModInitializer {
         });
 
         ServerLifecycleEvents.SERVER_STARTED.register(server -> {
+            if (isReplayServer(server)) return;
             try {
                 var directory = FabricLoader.getInstance().getConfigDir().resolve("towntrade");
                 var config = TradeConfig.load(directory);
@@ -52,6 +56,7 @@ public final class TownTrade implements ModInitializer {
             }
         });
         ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+            board.clear();
             if (service != null) {
                 service.close();
                 service = null;
@@ -59,6 +64,7 @@ public final class TownTrade implements ModInitializer {
         });
         ServerTickEvents.END_SERVER_TICK.register(server -> {
             if (service != null) service.tick(false);
+            board.tick(server, service);
         });
         ServerPlayConnectionEvents.JOIN.register((handler, sender, server) -> {
             if (service != null) {
@@ -98,6 +104,10 @@ public final class TownTrade implements ModInitializer {
             });
             dispatcher.register(Commands.literal("towntrade").then(info).then(active).then(open.then(sell)));
         });
+    }
+
+    static boolean isReplayServer(MinecraftServer server) {
+        return server != null && server.getClass().getName().equals("com.moulberry.flashback.playback.ReplayServer");
     }
 
     static Component commandLink(String command) {

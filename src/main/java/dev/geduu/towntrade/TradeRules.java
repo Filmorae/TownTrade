@@ -9,6 +9,7 @@ final class TradeRules {
     static final long POINT = 60_000;
     static final long MAX_BALANCE = 1_000_000_000;
     static final long NO_TIME = Long.MAX_VALUE;
+    static final int SERVER_ORDER_LIMIT = 1024;
     private static final int MAX_ORDER_BATCHES = 5;
     private static final int MAX_TRADE_ITEMS = 2304;
 
@@ -52,6 +53,13 @@ final class TradeRules {
         Order closed(String outcome) {
             return new Order(id, owner, ownerName, product, price, placed, arrives, protectsUntil, expires, outcome, quantity);
         }
+    }
+
+    static boolean deletableOrder(String status) {
+        return switch (status) {
+            case "cancelled", "claimed", "bought_by_other" -> true;
+            default -> false;
+        };
     }
 
     static Stock replenish(Stock old, int capacity, int batch, long interval, long now) {
