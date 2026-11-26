@@ -558,9 +558,27 @@ final class TradeScreen extends Screen {
                 graphics.outline(listLeft, top, listRight - listLeft, ORDER_ROW - 2, hovered ? AMBER : GREEN);
             }
             graphics.fakeItem(item.stack(), listLeft + 3, top + 1);
-            String label = order.quantity() + " × " + item.name() + " · " + order.owner();
+            String label = order.quantity() + " × " + item.name();
+            if (tab != Tab.MINE) label += " · " + order.owner();
             boolean canDelete = canDelete(order);
             int reserve = canDelete ? ORDER_DELETE_WIDTH + 3 : 0;
+            if (tab == Tab.MINE) {
+                String status = switch (order.status()) {
+                    case "waiting" -> "in_progress";
+                    case "protected", "available" -> "purchasable";
+                    case "claimed", "bought_by_other" -> "completed";
+                    default -> order.status();
+                };
+                int color = switch (status) {
+                    case "in_progress" -> AMBER;
+                    case "purchasable", "completed" -> GREEN;
+                    default -> MUTED;
+                };
+                var badge = key("order.row." + status);
+                int badgeWidth = font.width(badge);
+                graphics.text(font, badge, listRight - reserve - 6 - badgeWidth, top + 6, color);
+                reserve += badgeWidth + 8;
+            }
             graphics.text(font, font.plainSubstrByWidth(label, Math.max(12, listRight - listLeft - 26 - reserve)),
                     listLeft + 23, top + 6, WHITE);
             if (canDelete) {
@@ -576,7 +594,7 @@ final class TradeScreen extends Screen {
     }
 
     private boolean canDelete(TradeWire.OrderView order) {
-        return tab == Tab.MINE && order.own() && order.status().equals("cancelled");
+        return tab == Tab.MINE && order.own() && TradeRules.deletableOrder(order.status());
     }
 
     private boolean overOrderDelete(double x, double y, int top) {

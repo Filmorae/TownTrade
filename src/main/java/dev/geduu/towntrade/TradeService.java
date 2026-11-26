@@ -29,7 +29,6 @@ import net.minecraft.world.level.storage.LevelResource;
 
 final class TradeService {
     private static final long SESSION_LIMIT = 30 * TradeRules.MINUTE;
-    private static final int SERVER_ORDER_LIMIT = 1024;
     private static final long RESULT_HISTORY = 7 * 24 * 60 * TradeRules.MINUTE;
 
     private static final class Session {
@@ -88,6 +87,8 @@ final class TradeService {
     private boolean closing;
     private long nextSweep;
     private long nextPrune;
+    private long nextBoardChange;
+    private BoardSnapshot publicBoard = BoardSnapshot.STARTING;
     private String season = "";
 
     TradeService(MinecraftServer server, TradeConfig config, ServiceConfig serviceConfig) {
@@ -358,7 +359,7 @@ final class TradeService {
             personal++;
             if (previous.product().equals(rule.id())) throw reject("already_ordered");
         }
-        if (personal >= config.orderLimit() || active >= SERVER_ORDER_LIMIT) throw reject("order_limit");
+        if (personal >= config.orderLimit() || active >= TradeRules.SERVER_ORDER_LIMIT) throw reject("order_limit");
         long arrival = now + rule.interval();
         var order = new TradeRules.Order(UUID.randomUUID().toString(), owner, player.getScoreboardName(),
                 rule.id(), price, now, arrival, arrival + config.protectionMinutes() * TradeRules.MINUTE,
@@ -388,12 +389,12 @@ final class TradeService {
 
     private ListingData orderProduct(TradeRules.Order order) {
         var entry = products.get(order.product());
-        return entry != null && entry.rule().requestOnly() ? entry : null;
+        return entry != null && ShelfCatalog.acceptsExistingOrder(entry.rule()) ? entry : null;
     }
 
     private Deal deleteOrder(String owner, String id) {
         var order = state.orders.get(id);
-        if (order == null || !order.owner().equals(owner) || !order.status().equals("cancelled")) {
+        if (order == null || !order.owner().equals(owner) || !TradeRules.deletableOrder(order.status())) {
             throw reject("order_unavailable");
         }
         return new Deal(new TradeStore.Change(owner, null, null, null, null, null, null, null, id), null);
@@ -460,6 +461,7 @@ final class TradeService {
                 return;
             }
             state.apply(pending.change());
+            if (pending.change().stock() != null || pending.change().order() != null) nextBoardChange = 0;
             if (pending.change().permits() != null) {
                 var online = server.getPlayerList().getPlayer(player.getUUID());
                 if (online != null) {
@@ -721,6 +723,48 @@ final class TradeService {
 
     private TradeRules.Stock stock(TradeConfig.Product product, long now) {
         return TradeRules.replenish(state.stocks.get(product.id()), product.capacity(), product.restock(), product.interval(), now);
+    }
+
+    BoardSnapshot publicBoard(long now) {
+        if (unavailable || closing) return BoardSnapshot.OFFLINE;
+        if (state == null) return BoardSnapshot.STARTING;
+        if (now < nextBoardChange) return publicBoard;
+
+        long next = TradeRules.NO_TIME;
+        record ScheduledRestock(String id, BoardSnapshot.Restock restock) {}
+        var restocks = new ArrayList<ScheduledRestock>();
+        for (var id : state.stocks.keySet()) {
+            var entry = products.get(id);
+            if (entry == null || !entry.rule().stocked()) continue;
+            long at = stock(entry.rule(), now).next();
+            if (at == TradeRules.NO_TIME) continue;
+            restocks.add(new ScheduledRestock(id, new BoardSnapshot.Restock(entry.item().getHoverName(), at)));
+            next = Math.min(next, at);
+        }
+        restocks.sort(Comparator.comparingLong((ScheduledRestock entry) -> entry.restock().at())
+                .thenComparing(ScheduledRestock::id));
+        var orders = new ArrayList<TradeRules.Order>();
+        for (var order : state.orders.values()) {
+            if (!order.active(now) || orderProduct(order) == null) continue;
+            orders.add(order);
+            next = Math.min(next, order.expires());
+            if (now < order.arrives()) next = Math.min(next, order.arrives());
+            else if (now < order.protectsUntil()) next = Math.min(next, order.protectsUntil());
+        }
+        orders.sort(Comparator.comparingLong(TradeRules.Order::placed).thenComparing(TradeRules.Order::id));
+        var offers = orders.stream().limit(TradeRules.SERVER_ORDER_LIMIT).map(order -> {
+            var entry = orderProduct(order);
+            var phase = !order.arrived(now) ? BoardSnapshot.Phase.WAITING
+                    : now < order.protectsUntil() ? BoardSnapshot.Phase.PROTECTED : BoardSnapshot.Phase.PUBLIC;
+            return new BoardSnapshot.Offer(entry.item().getHoverName(), order.quantityOrBatch(entry.rule().buyBatch()),
+                    TradeRules.publicPrice(order.price(), config.publicPremium()), order.expires(), order.ownerName(),
+                    order.arrives(), order.protectsUntil(), phase);
+        }).toList();
+        publicBoard = new BoardSnapshot(BoardSnapshot.Status.READY, timezone.getId(),
+                restocks.stream().limit(BoardSnapshot.RESTOCK_LIMIT).map(ScheduledRestock::restock).toList(),
+                offers);
+        nextBoardChange = next;
+        return publicBoard;
     }
 
     private long quota(String owner, String pool, long now) {
